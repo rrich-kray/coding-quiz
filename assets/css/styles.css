@@ -1,0 +1,65 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.flex-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.navbar {
+    flex-basis: auto;
+    height: 100px;
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+}
+
+.header {
+    width: 100%;
+}
+
+.timer {
+    width: 50%;
+    justify-content: flex-start;
+    font-size: large;
+}
+
+.current-score {
+    font-size: large;
+}
+
+.high-scores {
+    font-size: large;
+}
+
+.main-container {
+    width: 100%;
+    height: 750px;
+}
+
+.start-button {
+    height: 100px;
+    width: 100px;
+    background-color: purple;
+    border-radius: 25%;
+}
+
+.answer {
+    margin: 5px;
+}
+
+
+/* Center questions and start button on page */
