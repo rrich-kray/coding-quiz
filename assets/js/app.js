@@ -69,9 +69,24 @@ var endGame = function(){
     if (playAgain) {
         runGame();
     } else {
-        loadQuestion();
+        loadStartBtn();
     }
 }
+
+var randomQuestion = function(){
+    var randomIndex = Math.floor(Math.random() * questions.length);
+    var question = questions[randomIndex];
+    if (!usedQuestions.includes(question)){
+        usedQuestions.push(questions)
+    } else {
+        randomQuestion();
+    }
+    if (questions.length === usedQuestions.length){
+        endGame();
+    }
+}
+
+var question;
 
 var startTimer = function() {
     var timeInterval = setInterval(function(){
@@ -88,6 +103,7 @@ var startTimer = function() {
 }
 
 var loadQuestion = function(question) {
+    var question = randomQuestion()
     var html = `
     <div class="question flex-row">
         <h2 class="question">${question.question}</h2>
@@ -110,23 +126,14 @@ var loadQuestion = function(question) {
             timer -= 10;
         }
     });
-
-    if (usedQuestions.length === questions.length) {
-        window.alert("You have completed the quiz!");
-        endGame();
-    }
 }
 
 var runGame = function(){
     startTimer();
-    questions.forEach(function(item){
-        loadQuestion(item);
-        usedQuestions.push(item);
-    })
-    if (usedQuestions === questions){
-        endGame();
-    }
+    loadQuestion();
 }
+
+console.log(loadQuestion)
 
 startButton.addEventListener('click', runGame)
 
