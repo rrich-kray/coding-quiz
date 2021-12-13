@@ -36,20 +36,27 @@ var questions = [
 // build timer, get it displaying on the page, then subtract from timer value when question is answered incorrectly
 
 var score = 0;
-
+var timeLeft = 60;
+var usedQuestions = [];
 var mainContainer = document.querySelector('.main-container');
 var timeEl = document.querySelector('#timer');
 var startButton = document.querySelector('.start-button');
 var display = document.getElementById("timer");
 var scoreEl = document.querySelector('.score');
-var minute = 60;
+var timeLeft = 60;
 
 scoreEl.innerHTML = score;
 
-var usedQuestions = [];
+var loadStartBtn = function(){
+    var html = `
+    <button class="start-button">Start!</button>
+    `
+    mainContainer.innerHTML = html;
+}
 
 var endGame = function(){
     window.alert("The game is ended!");
+    timeLeft = 60;
     usedQuestions = [];
     var html = `
     <div class='endgame'>
@@ -60,44 +67,27 @@ var endGame = function(){
     mainContainer.innerHTML = html;
     var playAgain = window.confirm("Would you like to play again?")
     if (playAgain) {
-        startGame();
+        runGame();
     } else {
         loadQuestion();
     }
 }
 
-var randomQuestion = function(){
-    var randomIndex = Math.floor(Math.random() * questions.length);
-    var rQuestion =  questions[randomIndex];
-    if (!usedQuestions.includes(rQuestion)) {
-        usedQuestions.push(rQuestion);
-    } else {
-        randomQuestion();
-    }
-    return rQuestion;
-} 
-
-var startTimer = function(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function(){
-        minutes = parseInt(timer / 60, 10);
-        seconds = parseInt(timer % 60, 10);
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        display.textContent = `${minutes}:${seconds}`;
-        if (--timer === 0) {
-            window.alert("You have run out of time!");
-            timer = duration;
-            startGame();
+var startTimer = function() {
+    var timeInterval = setInterval(function(){
+        if (timeLeft > 1) {
+            display.textContent = `${timeLeft} seconds remaining`
+            timeLeft--
+        } else if (timeLeft === 1) {
+            display.textContent = `${timeLeft} second remaining`
+        } else {
+            clearInterval(timeInterval);
+            display.textContent = '';
         }
     }, 1000)
 }
 
-var question = randomQuestion();
-
-var loadQuestion = function() {
-    console.log(randomQuestion())
-    question = randomQuestion();
+var loadQuestion = function(question) {
     var html = `
     <div class="question flex-row">
         <h2 class="question">${question.question}</h2>
@@ -111,34 +101,37 @@ var loadQuestion = function() {
     `
     mainContainer.innerHTML = html;
     var answers = document.querySelector('.answers')
-    answers.addEventListener('click', answerQuestion);
-    
+    answers.addEventListener('click', function(event){
+        var selection = event.target.dataset.id;
+        if (selection === question.correct) {
+            score++;
+            score.innerHTML = score;
+        } else {
+            timer -= 10;
+        }
+    });
+
     if (usedQuestions.length === questions.length) {
         window.alert("You have completed the quiz!");
         endGame();
     }
 }
 
-var answerQuestion = function(event){
-    var selection = event.target.dataset.id;
-    if (selection === question.correct) {
-        score++;
-        score.innerHTML = score;
-        loadQuestion();
-    } else {
-        timer -= 10;
-        loadQuestion();
+var runGame = function(){
+    startTimer();
+    questions.forEach(function(item){
+        loadQuestion(item);
+        usedQuestions.push(item);
+    })
+    if (usedQuestions === questions){
+        endGame();
     }
 }
 
-var startGame = function(){
-    startButton.addEventListener('click', loadQuestion);
-    startTimer(minute, display);
-}
+startButton.addEventListener('click', runGame)
 
-startGame();
 
 // To Do: 
-// Ensure that questions do not repeat
+// Remove randomization - unnecessary
 // Score still isn't working; timer won't subtract 
 // Implement "view high scores" section
