@@ -33,22 +33,19 @@ var questions = [
     },
 ]
 
-// build timer, get it displaying on the page, then subtract from timer value when question is answered incorrectly
-
-var score = 0;
-var timeLeft = 60;
 var usedQuestions = [];
 var mainContainer = document.querySelector('.main-container');
 var timeEl = document.querySelector('#timer');
 var startButton = document.querySelector('.start-button');
 var display = document.getElementById("timer");
 var scoreEl = document.querySelector('.score');
-var timeLeft = 60;
+var timeLeft;
 var question;
+var score;
 
 scoreEl.innerHTML = score;
 
-var loadStartBtn = function(){
+var loadStartBtn = function(){;
     var html = `
     <button class="start-button">Start!</button>
     `
@@ -56,28 +53,29 @@ var loadStartBtn = function(){
 }
 
 var randomQuestion = function(){
+    if (usedQuestions.length === questions.length){
+        return false;
+    }
     var randomIndex = Math.floor(Math.random() * questions.length);
-    return questions[randomIndex];
+    var rQuestion = questions[randomIndex];
+    if (!usedQuestions.includes(rQuestion)){
+        usedQuestions.push(rQuestion)
+    } else {
+        return randomQuestion();
+    }
+    return rQuestion;
 }
 
-var loadIntoStorage = function(){
+/* var loadIntoStorage = function(){
     questions.forEach(function(question){
-        localStorage.setItem("question", JSON.stringefy(questions)); // is for loop necessary
+        localStorage.setItem("question", JSON.stringify(questions)); // is for loop necessary
     })
-    localStorage.setItem('score', JSON.stringefy(score));
-}
+    localStorage.setItem('score', JSON.stringify(score));
+} */
 
 var endGame = function(){
     window.alert("The game is ended!");
-    timeLeft = 60;
-    usedQuestions = [];
-    var html = `
-    <div class='endgame'>
-        <h1>Game Over!</h1>
-        <p>Your final score is <span class="score">${score}</span>
-    </div>
-    `;
-    mainContainer.innerHTML = html;
+    window.alert(`Your final score is ${score}!`)
     var playAgain = window.confirm("Would you like to play again?")
     if (playAgain) {
         runGame();
@@ -92,53 +90,66 @@ var startTimer = function() {
             display.textContent = `${timeLeft} seconds remaining`
             timeLeft--
         } else if (timeLeft === 1) {
-            display.textContent = `${timeLeft} second remaining`
+            display.textContent = `${timeLeft} second remaining`;
+            timeLeft--;
         } else {
             clearInterval(timeInterval);
-            display.textContent = '';
+            window.alert("Times up!");
+            endGame();
         }
     }, 1000)
 }
 
 var loadQuestion = function() {
-    question = randomQuestion()
+    question = randomQuestion();
+    if (!question){
+        endGame();
+    }
     var html = `
     <div class="question flex-row">
         <h2 class="question">${question.question}</h2>
     </div>
     <div class="answers flex-column">
-        <div class="answer" id="answer1" data-id='choice1'><button>${question.choice1}</button></div>
-        <div class="answer" id="answer2" data-id='choice2'><button>${question.choice2}</button></div>
-        <div class="answer" id="answer3" data-id='choice3'><button>${question.choice3}</button></div>
-        <div class="answer" id="answer4" data-id='choice4'><button>${question.choice4}</button></div>
+        <div class="answer" id="answer1"><button data-id='choice1'>${question.choice1}</button></div>
+        <div class="answer" id="answer2"><button data-id='choice2'>${question.choice2}</button></div>
+        <div class="answer" id="answer3"><button data-id='choice3'>${question.choice3}</button></div>
+        <div class="answer" id="answer4"><button data-id='choice4'>${question.choice4}</button></div>
     </div>
     `;
     mainContainer.innerHTML = html;
     var answers = document.querySelector('.answers');
     answers.addEventListener('click', function(event){
         var selection = event.target.dataset.id;
+        console.log(selection) 
         if (selection === question.correct) {
-            score++;
-            score.innerHTML = score;
+            score += 1;
+            scoreEl.innerHTML = score;
         } else {
             timer -= 10;
+            timeEl.innerHTML = timer;
+
         }
+        loadQuestion();
     });
 }
 
 var runGame = function(){
+    timeLeft = 10;
+    timeEl.innerHTML = timeLeft
+    score = 0;
+    scoreEl.innerHTML = score;
+    usedQuestions = [];
     startTimer();
-    loadIntoStorage();
+    /* loadIntoStorage(); */
     loadQuestion();
 }
-
-// questions are added all at once, so that length of usedQuestions is immediately same length of questions
-// Want to loop through questions array, but not 
 
 startButton.addEventListener('click', runGame)
 
 
-// To Do: 
-// Remove randomization - unnecessary
-// Score still isn't working; timer won't subtract 
+// Bugs: 
+// Final score is not displayed - fixed
+// Also display final stats when time runs out 
+// When user opts to play again, clock runs unusually fast
+// loadStartBtn() returns question and choices labeled "undefined"
 // Implement "view high scores" section
