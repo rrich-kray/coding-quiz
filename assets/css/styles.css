@@ -17,32 +17,8 @@
     align-items: center;
 }
 
-.navbar {
-    flex-basis: auto;
-    height: 100px;
-    width: 100%;
-}
-
-.container {
-    width: 100%;
-}
-
 .header {
     width: 100%;
-}
-
-.timer {
-    width: 50%;
-    justify-content: flex-start;
-    font-size: large;
-}
-
-.current-score {
-    font-size: large;
-}
-
-.high-scores {
-    font-size: large;
 }
 
 .main-container {

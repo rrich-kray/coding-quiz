@@ -125,16 +125,15 @@ var loadQuestion = function() {
             score += 1;
             scoreEl.innerHTML = score;
         } else {
-            timer -= 10;
+            timeLeft -= 10;
             timeEl.innerHTML = timer;
-
         }
         loadQuestion();
     });
 }
 
 var runGame = function(){
-    timeLeft = 10;
+    timeLeft = 60;
     timeEl.innerHTML = timeLeft
     score = 0;
     scoreEl.innerHTML = score;
@@ -149,7 +148,10 @@ startButton.addEventListener('click', runGame)
 
 // Bugs: 
 // Final score is not displayed - fixed
-// Also display final stats when time runs out 
+// Also display final stats when time runs out - fixed
+// Clock continues to run aster all questions are answered - fixed
+// incorrect answer penalized with time subtraction - fixed
 // When user opts to play again, clock runs unusually fast
 // loadStartBtn() returns question and choices labeled "undefined"
 // Implement "view high scores" section
+// formatting
