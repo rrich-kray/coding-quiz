@@ -31,6 +31,16 @@ var questions = [
         choice4: "None of the above",
         correct: "choice1"
     },
+    {
+        question: "What bootstrap method would add margin to an element?:",
+        choice1: "row",
+        choice2: "col",
+        choice3: "mt-5",
+        choice4: "None of the above",
+        correct: "choice3"
+    },
+
+    
 ]
 
 var usedQuestions = [];
@@ -39,44 +49,45 @@ var timeEl = document.querySelector('#timer');
 var startButton = document.querySelector('.start-button');
 var display = document.getElementById("timer");
 var scoreEl = document.querySelector('.score');
+var highScores = document.querySelector('.high-scores')
 var timeLeft;
 var question;
-var score;
+var score = 0;
 
 scoreEl.innerHTML = score;
 
-var loadStartBtn = function(){;
-    var html = `
-    <button class="start-button">Start!</button>
-    `
-    mainContainer.innerHTML = html;
-}
-
 var randomQuestion = function(){
-    if (usedQuestions.length === questions.length){
-        return false;
-    }
+    if (usedQuestions.length === questions.length){return false}
     var randomIndex = Math.floor(Math.random() * questions.length);
     var rQuestion = questions[randomIndex];
     if (!usedQuestions.includes(rQuestion)){
-        usedQuestions.push(rQuestion)
+        usedQuestions.push(rQuestion);
     } else {
         return randomQuestion();
     }
     return rQuestion;
 }
 
-/* var loadIntoStorage = function(){
-    questions.forEach(function(question){
-        localStorage.setItem("question", JSON.stringify(questions)); // is for loop necessary
-    })
-    localStorage.setItem('score', JSON.stringify(score));
-} */
-
 var endGame = function(){
+
     window.alert("The game is ended!");
     window.alert(`Your final score is ${score}!`)
-    var playAgain = window.confirm("Would you like to play again?")
+    var initialsPrompt = window.prompt("Please enter your intitials");
+    var initObj = {
+        initials: initialsPrompt, 
+        score: score
+    }
+    if (!JSON.parse(window.localStorage.getItem('scores'))) {
+        window.localStorage.clear();
+        var scores = []
+        window.localStorage.setItem('scores', JSON.stringify(scores));
+        return;
+    }
+    var scoresList = JSON.parse(window.localStorage.getItem('scores'));
+    scoresList.push(initObj);
+    window.localStorage.setItem('scores', JSON.stringify(scoresList));
+
+    var playAgain = window.confirm("Would you like to play again?");
     if (playAgain) {
         runGame();
     } else {
@@ -87,7 +98,7 @@ var endGame = function(){
 var startTimer = function() {
     var timeInterval = setInterval(function(){
         if (timeLeft > 1) {
-            display.textContent = `${timeLeft} seconds remaining`
+            display.textContent = `${timeLeft} seconds remaining`;
             timeLeft--
         } else if (timeLeft === 1) {
             display.textContent = `${timeLeft} second remaining`;
@@ -102,56 +113,74 @@ var startTimer = function() {
 
 var loadQuestion = function() {
     question = randomQuestion();
-    if (!question){
-        endGame();
-    }
+    if (!question){endGame()}
     var html = `
     <div class="question flex-row">
         <h2 class="question">${question.question}</h2>
     </div>
     <div class="answers flex-column">
-        <div class="answer" id="answer1"><button data-id='choice1'>${question.choice1}</button></div>
-        <div class="answer" id="answer2"><button data-id='choice2'>${question.choice2}</button></div>
-        <div class="answer" id="answer3"><button data-id='choice3'>${question.choice3}</button></div>
-        <div class="answer" id="answer4"><button data-id='choice4'>${question.choice4}</button></div>
+        <div id="answer1"><button data-id='choice1' class='btn answer-btn'>${question.choice1}</button></div>
+        <div id="answer2"><button data-id='choice2' class='btn answer-btn'>${question.choice2}</button></div>
+        <div id="answer3"><button data-id='choice3' class='btn answer-btn'>${question.choice3}</button></div>
+        <div id="answer4"><button data-id='choice4' class='btn answer-btn'>${question.choice4}</button></div>
     </div>
     `;
+
     mainContainer.innerHTML = html;
     var answers = document.querySelector('.answers');
     answers.addEventListener('click', function(event){
         var selection = event.target.dataset.id;
-        console.log(selection) 
         if (selection === question.correct) {
             score += 1;
             scoreEl.innerHTML = score;
         } else {
             timeLeft -= 10;
-            timeEl.innerHTML = timer;
+            timeEl.innerHTML = timeLeft;
         }
         loadQuestion();
     });
 }
 
-var runGame = function(){
-    timeLeft = 60;
-    timeEl.innerHTML = timeLeft
+var loadStartBtn = function(){
+    // reset(); 
+    mainContainer.innerHTML = `
+    <button class="start-button btn">Start!</button>
+    `;
+    console.log(mainContainer);
+    clearInterval(timeInterval);
+}
+
+var loadScores = function() {
+    mainContainer.innerHTML = `
+        <div>
+            <ol id='scores-list'>
+            </ol>
+        </div>
+    `
+    var scoresList = JSON.parse(localStorage.getItem('scores'));
+    if (!scoresList){window.alert("there are no high scores yet!"); loadStartBtn();}
+    scoresList.forEach(function(score){
+        var listItem = document.createElement('li');
+        listItem.className = 'list-item';
+        listItem.innerHTML = `User: ${score.initials} Score: ${score.score}`
+        document.getElementById('scores-list').appendChild(listItem);
+    })
+}
+
+var reset = function(){
     score = 0;
+    timeLeft = 60;
+    mainContainer.innerHTML = ''
+    timeEl.innerHTML = timeLeft;
     scoreEl.innerHTML = score;
     usedQuestions = [];
+}
+
+var runGame = function(){
+    reset();
     startTimer();
-    /* loadIntoStorage(); */
     loadQuestion();
 }
 
 startButton.addEventListener('click', runGame)
-
-
-// Bugs: 
-// Final score is not displayed - fixed
-// Also display final stats when time runs out - fixed
-// Clock continues to run aster all questions are answered - fixed
-// incorrect answer penalized with time subtraction - fixed
-// When user opts to play again, clock runs unusually fast
-// loadStartBtn() returns question and choices labeled "undefined"
-// Implement "view high scores" section
-// formatting
+highScores.addEventListener('click', loadScores)
