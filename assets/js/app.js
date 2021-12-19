@@ -69,7 +69,6 @@ var randomQuestion = function(){
 }
 
 var endGame = function(){
-
     window.alert("The game is ended!");
     window.alert(`Your final score is ${score}!`)
     var initialsPrompt = window.prompt("Please enter your intitials");
@@ -108,7 +107,7 @@ var startTimer = function() {
             window.alert("Times up!");
             endGame();
         }
-    }, 1000)
+    }, 1000);
 }
 
 var loadQuestion = function() {
@@ -182,5 +181,5 @@ var runGame = function(){
     loadQuestion();
 }
 
-startButton.addEventListener('click', runGame)
+startButton.addEventListener('click', runGame);
 highScores.addEventListener('click', loadScores)
