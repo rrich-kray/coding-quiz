@@ -26,7 +26,7 @@ The game ends when all questions have been answered or if time runs out prior to
 
 ![Invalid input prompt screenshot](./assets/images/screen7.png)
 
-By ocntrast, if the user completes the quiz before time runs out, the following prompt displays;
+By contrast, if the user completes the quiz before time runs out, the following prompt displays;
 
 ![Invalid input prompt screenshot](./assets/images/screen8.png)
 
@@ -35,6 +35,10 @@ In either case, the game will end, and the user will be asked to provide his or 
 ![Invalid input prompt screenshot](./assets/images/screen9.png)
 
 Choosing to play again will reset both the timer and score, and the user will be presented with the questions once more. Declining to play again will reload the start button. 
+
+Scores are saved to the browser's local storage, which can be viewed by hitting the "View High Scores" link in the top right portion of the page. Doing so will display the following menu;
+
+![Invalid input prompt screenshot](./assets/images/screen5.png)
 
 ## Deployed Application
 
