@@ -33,7 +33,7 @@ Each question provides four choices, as is shown below:
 
 ![Content Prompt Screenshot](./assets/images/screen6.png)
 
-Correct answers increment the local "score" variable by 10, while incorrect answers decrement the countdown timer by 10 seconds.
+Correct answers increment the local "score" variable by 10, while incorrect answers decrement the "countdown" timer by 10 seconds.
 
 ![Content Prompt Screenshot](./assets/images/screen3.png)
 
