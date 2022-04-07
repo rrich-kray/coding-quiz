@@ -35,8 +35,6 @@ Each question provides four choices, as is shown below:
 
 Correct answers increment the local "score" variable by 10, while incorrect answers decrement the "countdown" timer by 10 seconds.
 
-![Content Prompt Screenshot](./assets/images/screen3.png)
-
 The game ends when all questions have been answered or if time runs out prior to completion of the quiz. Failing to complete the quiz within the allotted timeframe will cause the following prompt to appear;
 
 ![Invalid input prompt screenshot](./assets/images/screen7.png)
