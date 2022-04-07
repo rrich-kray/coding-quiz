@@ -7,7 +7,7 @@ This repository contains the HTML, CSS and Javascript source code for my Coding 
 [Description](#description)  
 [Installation](#installation)  
 [How It Works](#howitworks)  
-[Utilizes](#utilizes)
+[Utilizes](#utilizes)  
 [Deployed Application](#deployedApplication)  
 [License](#license)
 
