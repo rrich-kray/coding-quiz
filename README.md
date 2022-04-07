@@ -17,7 +17,7 @@ This repository contains the HTML, CSS and Javascript source code for my Coding 
 
 Coding quiz was developed so that users can users can quickly and easily test their knowledge of various programming topics. This application is front-end only and was undertaken to increase my familiarity with using local storage to store data.
 
-In the near future, I plan to rebuild the application from the ground up using the React framework, which I believe would be better suited for conditionally rendering the quiz questions.
+In the near future, I plan to rebuild the application from the ground up using the React framework, which I believe would be better suited for conditionally rendering the quiz questions. I may also store quiz questions and user score data in a MySQL or MongoDB database.
 
 ## Installation
 
@@ -37,11 +37,11 @@ Correct answers increment the local "score" variable by 10, while incorrect answ
 
 ![Content Prompt Screenshot](./assets/images/screen3.png)
 
-The game ends when all questions have been answered or if time runs out prior to completion of the quiz. If the latter occurs, the user will be presented with the following prompt;
+The game ends when all questions have been answered or if time runs out prior to completion of the quiz. Failing to complete the quiz within the allotted timeframe will cause the following prompt to appear;
 
 ![Invalid input prompt screenshot](./assets/images/screen7.png)
 
-By contrast, if the user completes the quiz before time runs out, the following prompt displays;
+Completing the quiz will cause the following prompt to display;
 
 ![Invalid input prompt screenshot](./assets/images/screen8.png)
 
@@ -49,7 +49,7 @@ In either case, the game will end, and the user will be asked to provide his or 
 
 ![Invalid input prompt screenshot](./assets/images/screen9.png)
 
-Choosing to play again will reset both the timer and score, and the user will be presented with the questions once more. Declining to play again will reload the start button.
+If the player chooses to initiate another quiz session, the application will loop throught the questions once more. Should the player choose not to play again, the application will rerender the start button.
 
 Scores are saved to the browser's local storage, which can be viewed by hitting the "View High Scores" link in the top right portion of the page. Doing so will display the following menu;
 
@@ -63,7 +63,7 @@ Scores are saved to the browser's local storage, which can be viewed by hitting 
 
 ## Deployed Application
 
-the deployed application can be found by following the link below.
+The deployed application can be found using the link below.
 
 https://rrich-kray.github.io/coding-quiz/
 
