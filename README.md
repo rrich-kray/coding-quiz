@@ -1,24 +1,39 @@
 # Coding Quiz
 
-## The Repository
+This repository contains the HTML, CSS and Javascript source code for my Coding Quiz Project.
 
-This repository contains the HTML, CSS and Javascript code for the Coding Quiz Project.
+## Table of Contents
 
-## Coding Quiz
+[Description](#description)  
+[Installation](#installation)  
+[Usage](#usage)  
+[Utilizes](#utilizes)  
+[Questions](#questions)  
+[License](#license)
+
+## Description
 
 ![Coding Quiz Screenshot](./assets/images/screen1.png)
 
-Looking to test your knowledge of the javascript language and have fun at the same time? Look no further! This quiz presents the user with several  questions that touch on core javascript concepts.  
+Coding quiz was developed so that users can users can quickly and easily test their knowledge of various programming topics. This application is front-end only and was undertaken to increase my familiarity with using local storage to store data.
 
-## Usage
+In the near future, I plan to rebuild the application from the ground up using the React framework, which I believe would be better suited for conditionally rendering the quiz questions.
 
-Hitting the start button will prompt users with questions, one at a time, and initiate a sixty second countdown timer. For each question, four choices are provided.
+## Installation
+
+Download the source code and run the index.html file (located in the root directory of the project folder) in a browser.
+
+## How it works
+
+Selecting the start button initiates a new quiz session and starts the countdown timer. Questions are then rendered using a while loop that terminates upon reaching the final index of the questions array. Indexes are incremented using an event listener attached to the answer button located below each question.
+
+Each question provides four choices, as is shown below:
 
 ![Length Prompt Screenshot](./assets/images/screen2.png)
 
 ![Content Prompt Screenshot](./assets/images/screen6.png)
 
-Answering a question correclty will reward the user with a point, which will be recorded in the "score" section at the top of the page. Answer incorrectly, and ten seconds will be subtracted from the user's remaining time.
+Correct answers increment the local "score" variable by 10, while incorrect answers decrement the countdown timer by 10 seconds.
 
 ![Content Prompt Screenshot](./assets/images/screen3.png)
 
@@ -34,11 +49,17 @@ In either case, the game will end, and the user will be asked to provide his or 
 
 ![Invalid input prompt screenshot](./assets/images/screen9.png)
 
-Choosing to play again will reset both the timer and score, and the user will be presented with the questions once more. Declining to play again will reload the start button. 
+Choosing to play again will reset both the timer and score, and the user will be presented with the questions once more. Declining to play again will reload the start button.
 
 Scores are saved to the browser's local storage, which can be viewed by hitting the "View High Scores" link in the top right portion of the page. Doing so will display the following menu;
 
 ![Invalid input prompt screenshot](./assets/images/screen5.png)
+
+## Utilizes
+
+- HTML
+- CSS
+- JavaScript
 
 ## Deployed Application
 
@@ -46,11 +67,18 @@ the deployed application can be found by following the link below.
 
 https://rrich-kray.github.io/coding-quiz/
 
-## Feedback
-
-Leave comments/suggestions in the Slack channel!
-
 ## License
 
-Copyright &copy; Coding Quiz, Inc. All rights reserved.
+Copyright (c) 2022, Ryan Kray
+All rights reserved.
 
+This source code is licensed under the BSD-style license found in the LICENSE file in the root directory of this source tree and reproduced below.
+
+Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+
+1. Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+3. All advertising materials mentioning features or use of this software must display the following acknowledgement: This product includes software developed by Ryan Kray.
+4. Neither the name of this application's developer nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDER ''AS IS'' AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.

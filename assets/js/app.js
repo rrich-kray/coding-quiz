@@ -53,6 +53,7 @@ var highScores = document.querySelector('.high-scores')
 var timeLeft;
 var question;
 var score = 0;
+var timeInterval;
 
 scoreEl.innerHTML = score;
 
@@ -88,14 +89,15 @@ var endGame = function(){
 
     var playAgain = window.confirm("Would you like to play again?");
     if (playAgain) {
-        runGame();
+        window.location.reload();
     } else {
         loadStartBtn();
     }
 }
 
 var startTimer = function() {
-    var timeInterval = setInterval(function(){
+    debugger;
+    timeInterval = setInterval(function(){
         if (timeLeft > 1) {
             display.textContent = `${timeLeft} seconds remaining`;
             timeLeft--
@@ -142,11 +144,12 @@ var loadQuestion = function() {
 
 var loadStartBtn = function(){
     // reset(); 
+    debugger;
     mainContainer.innerHTML = `
     <button class="start-button btn">Start!</button>
     `;
     console.log(mainContainer);
-    clearInterval(timeInterval);
+    // clearInterval(timeInterval);
 }
 
 var loadScores = function() {
@@ -165,6 +168,7 @@ var loadScores = function() {
         document.getElementById('scores-list').appendChild(listItem);
     })
 }
+
 
 var reset = function(){
     score = 0;
